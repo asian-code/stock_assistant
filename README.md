@@ -3,7 +3,7 @@
 
 ## :chart_with_upwards_trend: &nbsp; About StockCompare &nbsp; :chart_with_upwards_trend:
 
-This is a small tool which allows the user to compare possible profit amounts between stocks.
+This is a small tool which allows the user to compare possible gain between stocks.
 
 ------------------------------------------------------------------------
 
