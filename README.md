@@ -24,7 +24,7 @@ You can install the program by:
 
 Or by...
 
-**2. Typing in your terminal - `git clone https://www.github.com/lin8x/airline-crack`**
+**2. Typing in your terminal - `git clone https://www.github.com/asian-code/stockCompare`**
 
 *Once finished installing, please type `sudo python3 setup.py` to setup your program.*
 
@@ -48,6 +48,6 @@ Simply type `stockCompare` in your terminal to run the program.
 
 ## :page_with_curl: &nbsp; License &nbsp; :page_with_curl:
 
-This project is licensed under the GNU General Public License (v3.0) - see the ![LICENSE.md](https://github.com/Lin8x/airline-crack/blob/master/LICENSE) file for details.
+This project is licensed under the GNU General Public License (v3.0) - see the ![LICENSE](https://github.com/asian-code/stockCompare/blob/master/LICENSE) file for details.
 
 ------------------------------------------------------------------------
