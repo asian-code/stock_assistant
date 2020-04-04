@@ -1,7 +1,7 @@
 
 <a href="https://raw.githubusercontent.com/asian-code/stock_assistant/master/Images/stock.png" target="_blank"><img src="https://raw.githubusercontent.com/asian-code/StockCompare/master/Images/stock.png" align="right" border="0" width="450" height="200"></a>
 
-## :chart_with_upwards_trend: &nbsp; About StockCompare &nbsp; :chart_with_upwards_trend:
+## :chart_with_upwards_trend: &nbsp; About Stock assistant &nbsp; :chart_with_upwards_trend:
 
 This is a small tool which allows the user to compare possible gain between stocks.
 
