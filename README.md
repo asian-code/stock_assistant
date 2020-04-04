@@ -1,5 +1,4 @@
 <a href="https://raw.githubusercontent.com/asian-code/StockCompare/master/Images/stock.png" target="_blank"><img src="https://raw.githubusercontent.com/asian-code/StockCompare/master/Images/stock.png" border="0" alt="malfactoryboard" width="450" height="200"></a>
---------------------------
 ## :chart_with_upwards_trend: &nbsp; About StockCompare &nbsp; :chart_with_upwards_trend:
 
 This is a small tool which allows the user to compare selected stocks.
