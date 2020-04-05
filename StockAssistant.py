@@ -4,6 +4,7 @@ import requests
 import json
 import webbrowser
 import time
+
 cprice=0
 oprice=0
 name=""
@@ -126,7 +127,7 @@ def SaveToFile(option):
         if option =="0":
             filename+=".txt"
             f=open(filename,"w")
-            f.write("\nName\t\tBuy/Sell\t\t\tProfit\t\tGain %\n")
+            f.write("\nName\t\tBuy/Sell\t\tProfit\t\tGain %\n")
             for i in results:
                 f.write("\n{0}\t\t{1}\t\t${2}\t\t{3}%".format(i[0],i[1],i[2],i[3]))
             f.close()
@@ -135,22 +136,23 @@ def SaveToFile(option):
         print(green+"[+] Results have been saved!"+r)
         print(green+"[+] File located at "+cyan+location+r)
         # Auto open the saved table for user to see
-        #if option=="1":
-        #    webbrowser.open(location, new=2)
+        if option=="1":
+           webbrowser.open(location, new=2)
     except:
         print(red,"[!] A problem occured while trying to save to file, please try again"+r)
         report=input("[*] Would you like to report this issue? (y/n): ")
         if report.lower()=="y":
-            link="https://github.com/asian-code/stock_assistant/issues"
+            link="https://github.com/asian-code/stock_assistant/issues/new"
             print(cyan+bold+"[!] Please screenshot the error message and post it on "+green+link+r)
             print("---Error Message--------------------------------")
             raise
+            time.sleep(3)
             webbrowser.open(link,new=2)
 
 def Display():
     if len(Entry)>0:
         print("---{0}Saved Stocks{1}--------------------------------------------".format(green,r))   
-        print(cyan,"Name\t\tBuy / Sell\t\t\tProfit\t\tGain %",r)
+        print(cyan,"Name\t\tBuy / Sell\t\tProfit\t\tGain %",r)
         # loop through each tuple
         for i in Entry:
             print("{0}\t\t{1}\t\t${2}\t\t{3}%".format(i[0],i[1],i[2],i[3]))
@@ -167,15 +169,18 @@ def GetStockPriceOFFLINE():
         except:
             print(red,"[!] Not a valid price",r)
             valid=False
+
 def recommendIdea():
-    idea=input(r+"Think the tool can be better? Would you like to send ideas/features that should be added to Stock Assistant? (y/n): ")
+    link="https://github.com/asian-code/stock_assistant/issues/new"
+    idea=input(r+"\n---{0}Think the tool can be better? {1}-----------------------------\n\tWould you like to send ideas/features to developer? (y/n): ".format(cyan,r))
+    print(cyan+bold+link+r)
     if idea.lower()=="y":
-        print("Please post the Idea as an issue labeled as Idea/feature")
+        print("Please post the Idea as an issue titled as {0}Idea/feature{1}".format(green,r))
         time.sleep(2)
-        webbrowser.open("https://github.com/asian-code/stock_assistant/issues/new",new=2)
+        webbrowser.open(link,new=2)
 
 def quit():
-    userSelect="0"# default text
+    userSelect="0"# default = save to text file
     logo()
     Display()
     if len(Entry)>0:
@@ -252,7 +257,6 @@ try:
             # get current price(offline method)
             GetStockPriceOFFLINE()
         
-        
         # get sell price
         valid=False
         while not valid:
@@ -266,7 +270,7 @@ try:
         profit=round(oprice-cprice,2)
         ratio=round(profit/cprice*100,2)
         #save to list order of (Name,buy/sell,profit,ratio)
-        Entry.append([name,"${0}/${1}".format(cprice,oprice),profit,ratio])
+        Entry.append([name,"${0}/${1}".format(cprice,oprice),"$"+str(profit),ratio])
         #"{0}\t\t${3}/${4}\t\t${1}\t\t{2}".format(name,profit,ratio,cprice,oprice)
         #print(Entry)
         print(r)
