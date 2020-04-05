@@ -47,6 +47,25 @@ url = "https://alpha-vantage.p.rapidapi.com/query"
 querystring = {"symbol":"","function":"GLOBAL_QUOTE"}
 headers = {'x-rapidapi-host': "alpha-vantage.p.rapidapi.com",'x-rapidapi-key':"fa3f62a263mshdb10554a622214ep10f92ejsn34fca50a787f"}
 
+#to do list
+# logo and credits
+# export to markdown file or html file (charts)
+# windows support (code freeze)
+def logo():
+    print('''{2}
+        ____  _             _            
+       / ___|| |_ ___   ___| | __        
+       \___ \| __/ _ \ / __| |/ /        
+        ___) | || (_) | (__|   <         
+       |____/ \__\___/_\___|_|\_\ {0}   _   
+   __ _ ___ ___(_)___| |_ __ _ _ __ | |_ 
+  / _` / __/ __| / __| __/ _` | '_ \| __|
+ | (_| \__ \__ | \__ | || (_| | | | | |_ 
+  \__,_|___|___|_|___/\__\__,_|_| |_|\__|
+{1}
+ https://github.com/asian-code/stock_assistant/ {0}
+            Made by Asian-code                               
+'''.format(green,cyan,yellow)+r)
 def SaveToFile():
     f=open(filename,"w")
     f.write("Name\t\tBuy/Sell\t\t\tProfit\t\t% gain")
@@ -107,7 +126,7 @@ def getStockPrice(ticker):
 
 try:
     while True:
-      
+        logo()
         Display()
         print()
         # quit
@@ -146,12 +165,13 @@ try:
         
         profit=round(oprice-cprice,2)
         #save to array -profit/cprice
-        Entry.append("{0}\t\t${3}/${4}\t\t${1}\t\t{2}".format(name,profit,round(profit/cprice,2),cprice,oprice))
+        Entry.append("{0}\t\t${3}/${4}\t\t${1}\t\t{2}".format(name,profit,round(profit/cprice*100,2),cprice,oprice))
         print(r)
         os.system("clear")
 except KeyboardInterrupt:
     print(r)
     os.system("clear")
+    logo()
     Display()
     quit()
     
