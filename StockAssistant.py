@@ -6,7 +6,7 @@ cprice=0
 oprice=0
 name=""
 Entry=[]
-filename="myStocks.txt"
+filename="myStocks"
 r = '\033[0m'  # reset
 bold = '\033[01m'
 d = '\033[02m'  # disable
@@ -48,9 +48,8 @@ querystring = {"symbol":"","function":"GLOBAL_QUOTE"}
 headers = {'x-rapidapi-host': "alpha-vantage.p.rapidapi.com",'x-rapidapi-key':"fa3f62a263mshdb10554a622214ep10f92ejsn34fca50a787f"}
 
 #to do list
-# sorting method
-# export to html file (table)
 # windows support (code freeze)
+# auto open browser to open html table
 def logo():
     print('''{2}
         ____  _             _            
@@ -67,7 +66,8 @@ def logo():
             Made by Asian-code                               
 '''.format(green,cyan,yellow)+r)
 
-def SaveToFile():
+def SaveToFile(option):
+    global filename
     #add all [gain %] to a sorted list
     ratios=[]
     for i in Entry:
@@ -81,17 +81,60 @@ def SaveToFile():
                     Entry.remove(x)
                     results.append(x)
 
+    # Filename                
+    nameInput=input("{2}[*]Enter file name (default = {1}{0}{2}):{1} ".format(filename,green,r))
+    # if input is empty
+    if nameInput != "":
+        filename=nameInput
+    
+    # save to html table
+    if option=="1":
+        f=open(filename+".html","w")
+        f.write('''<style type="text/css">
+  .tg  {border-collapse:collapse;border-spacing:100;border-color:#9ABAD9;margin:0px auto;}
+  .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#9ABAD9;color:#444;background-color:#EBF5FF;}
+  .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#9ABAD9;color:#fff;background-color:#409cff;}
+  .tg .TopRow{font-size:22px;font-family:"Arial Black", Gadget, sans-serif !important;;border-color:inherit;text-align:center;vertical-align:top;position:sticky;position:-webkit-sticky;top:-1px;will-change:transform}
+  .tg .row1{background-color:#D2E4FC;font-size:22px;font-family:Arial, Helvetica, sans-serif !important;;border-color:inherit;text-align:center;vertical-align:top}
+  .tg .row2{font-size:22px;font-family:Arial, Helvetica, sans-serif !important;;border-color:inherit;text-align:center;vertical-align:top}
+  </style>
+  <table class="tg">
+    <tr>
+      <th class="TopRow">Stock</th>
+      <th class="TopRow">Buy/Sell</th>
+      <th class="TopRow">Profit Per Share</th>
+      <th class="TopRow">% Gain</th>
+    </tr>
+''')
+        c=0 # counter between css :row1, row2
+        for i in results:
+            f.write("<tr>")
+            for x in i:
+                if c % 2==0:
+                    f.write('<td class="row2">'+str(x)+'</td>')
+                else:
+                    f.write('<td class="row1">'+str(x)+'</td>')
+            f.write("<tr>")
+            c+=1
+        f.write("</table>")
+        f.close()
+
     # save to text file
-    f=open(filename,"w")
-    f.write("\nName\t\tBuy/Sell\t\t\tProfit\t\tGain %\n")
-    for i in results:
-        f.write("{0}\t\t{1}\t\t${2}\t\t{3}%".format(i[0],i[1],i[2],i[3]))
-    f.close()
+    if option =="0":
+        f=open(filename+".txt","w")
+        f.write("\nName\t\tBuy/Sell\t\tProfit\t\tGain %\n")
+        for i in results:
+            f.write("\n{0}\t\t{1}\t\t${2}\t\t{3}%".format(i[0],i[1],i[2],i[3]))
+        f.close()
+    # tell user the results have been saved
+    location=""
+    print(green+"[+] Results have been saved!"+r)
+    print(green+"[+] File located at "+cyan+location+r)
 
 def Display():
     if len(Entry)>0:
         print("---{0}Saved Stocks{1}--------------------------------------------".format(green,r))   
-        print(cyan,"Name\t\tBuy/Sell\t\t\tProfit\t\tGain %",r)
+        print(cyan,"Name\t\tBuy / Sell\t\tProfit\t\tGain %",r)
         # loop through each tuple
         for i in Entry:
             print("{0}\t\t{1}\t\t${2}\t\t{3}%".format(i[0],i[1],i[2],i[3]))
@@ -110,19 +153,26 @@ def GetStockPriceOFFLINE():
             valid=False
 
 def quit():
-    global filename
+    userSelect="0"# default text
+    logo()
+    Display()
     if len(Entry)>0:
         save=input("\n\n{0}[*] Would you like to save file?{1} (y/n): ".format(green,r))
-        if save=="y":
-            nameInput=input("[*]Enter file name (default name = {0}): ".format(filename))
-            #use default name if input is empty
-            if nameInput != "":
-                filename=nameInput+".txt"
-            # support for md files coming soon----------------------------------
-                
-            print(bold+"[+] Saving to file: {0}{2}{1}".format(green,r,filename))
-            SaveToFile()
-            print(green,"[+] Saved File, exiting program",r)
+        if save.lower()=="y":
+
+            #check valid selected option 
+            valid=False
+            while not valid:
+                os.system("clear")
+                Display()
+                print("\n---{0}Options{1}---------------------------".format(cyan,r))
+                print("\n{1}\t[{0}0{1}] Save as a text file (.txt)\n\t[{0}1{1}] Save as a html table (.html)\n".format(green,r))
+                print("--------------------------------------")
+                userSelect=input("[*] Select an option: "+green)
+                if userSelect=="0" or userSelect =="1":
+                    valid=True
+
+            SaveToFile(userSelect)
     else:
         print(green,"[+] Exiting program",r)
 
@@ -190,6 +240,4 @@ try:
 except KeyboardInterrupt:
     print(r)
     os.system("clear")
-    logo()
-    Display()
     quit()
