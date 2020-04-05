@@ -104,7 +104,7 @@ def quit():
                 filename=nameInput+".txt"
             # support for md files coming soon----------------------------------
                 
-            print(bold+"{0}[+] Saving to file: {1}{2}".format(green,r,filename))
+            print(bold+"[+] Saving to file: {0}{2}{1}".format(green,r,filename))
             SaveToFile()
             print(green,"[+] Saved File, exiting program",r)
     else:
@@ -130,8 +130,8 @@ try:
         Display()
         print()
         # quit
-        print("[+] Press '{0}Contorl+c{1}' or '{0}Crtl+c{1}' to quit/save\n".format(cyan,r))
-        name=input(r+"[*] Name of stock: "+green).upper()
+        print(" Press '{0}Contorl+c{1}' or '{0}Crtl+c{1}' to quit/save\n".format(cyan,r))
+        name=input(r+"[*] Ticker symbol of stock: "+green).upper()
         if name.upper()=="0":
             raise KeyboardInterrupt
 
