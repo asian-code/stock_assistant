@@ -155,7 +155,7 @@ def Display():
         print(cyan,"Name\t\tBuy / Sell\t\tProfit\t\tGain %",r)
         # loop through each tuple
         for i in Entry:
-            print("{0}\t\t{1}\t\t${2}\t\t{3}%".format(i[0],i[1],i[2],i[3]))
+            print("{0}\t\t{1}\t\t{2}\t\t{3}%".format(i[0],i[1],i[2],i[3]))
         print("-----------------------------------------------------------")
 
 def GetStockPriceOFFLINE():
@@ -172,7 +172,7 @@ def GetStockPriceOFFLINE():
 
 def recommendIdea():
     link="https://github.com/asian-code/stock_assistant/issues/new"
-    idea=input(r+"\n---{0}Think the tool can be better? {1}-----------------------------\n\tWould you like to send ideas/features to developer? (y/n): ".format(cyan,r))
+    idea=input(r+"\n---{0}Think the tool can be better? {1}-----------------------------\n Would you like to send ideas/features to developer? (y/n): ".format(cyan,r))
     print(cyan+bold+link+r)
     if idea.lower()=="y":
         print("Please post the Idea as an issue titled as {0}Idea/feature{1}".format(green,r))
@@ -193,7 +193,7 @@ def quit():
                 os.system("clear")
                 Display()
                 print("\n---{0}Options{1}---------------------------".format(cyan,r))
-                print("\n{1}\t[{0}0{1}] Save as a text file (.txt)\n\t[{0}1{1}] Save as a html table (.html)\n".format(green,r))
+                print("\n{1} [{0}0{1}] Save as a text file (.txt)\n [{0}1{1}] Save as a html table (.html)\n".format(green,r))
                 print("--------------------------------------")
                 userSelect=input("[*] Select an option: "+green)
                 if userSelect=="0" or userSelect =="1":
