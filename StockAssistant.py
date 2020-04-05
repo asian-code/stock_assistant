@@ -48,8 +48,7 @@ querystring = {"symbol":"","function":"GLOBAL_QUOTE"}
 headers = {'x-rapidapi-host': "alpha-vantage.p.rapidapi.com",'x-rapidapi-key':"fa3f62a263mshdb10554a622214ep10f92ejsn34fca50a787f"}
 
 #to do list
-# logo and credits
-# export to markdown file or html file (charts)
+# export to html file (table)
 # windows support (code freeze)
 def logo():
     print('''{2}
@@ -174,8 +173,3 @@ except KeyboardInterrupt:
     logo()
     Display()
     quit()
-    
-
-
-
-
