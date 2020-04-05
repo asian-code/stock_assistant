@@ -4,7 +4,9 @@ import requests
 import json
 import webbrowser
 import time
+import platform
 
+osystem=platform.system()
 cprice=0
 oprice=0
 name=""
@@ -52,7 +54,7 @@ headers = {'x-rapidapi-host': "alpha-vantage.p.rapidapi.com",'x-rapidapi-key':"f
 
 #to do list
 # windows support (code freeze)
-# auto open browser to open html table
+#pyinstaller -F -i StockAssistant.ico StocksAssistant.py
 def logo():
     print('''{2}
         ____  _             _            
@@ -68,7 +70,8 @@ def logo():
  https://github.com/asian-code/stock_assistant/ {0}
             Made by Asian-code                               
 '''.format(green,cyan,yellow)+r)
-
+def clearScreen():
+    
 def SaveToFile(option):
     global filename
     #add all [gain %] to a sorted list
@@ -135,9 +138,8 @@ def SaveToFile(option):
         location=resource_path(filename)
         print(green+"[+] Results have been saved!"+r)
         print(green+"[+] File located at "+cyan+location+r)
-        # Auto open the saved table for user to see
-        if option=="1":
-           webbrowser.open(location, new=2)
+        # Auto open the saved file for user to see
+        webbrowser.open(location, new=2)
     except:
         print(red,"[!] A problem occured while trying to save to file, please try again"+r)
         report=input("[*] Would you like to report this issue? (y/n): ")
@@ -170,12 +172,11 @@ def GetStockPriceOFFLINE():
             print(red,"[!] Not a valid price",r)
             valid=False
 
-def recommendIdea():
+def requestFeedback():
     link="https://github.com/asian-code/stock_assistant/issues/new"
-    idea=input(r+"\n---{0}Think the tool can be better? {1}-----------------------------\n Would you like to send ideas/features to developer? (y/n): ".format(cyan,r))
-    print(cyan+bold+link+r)
+    idea=input(r+"\n---{0}Got Feedback/Ideas/Issues? {1}-----------------------------\n Think the tool can be better?\n Would you like to send feedback? (y/n): ".format(cyan,r))
     if idea.lower()=="y":
-        print("Please post the Idea as an issue titled as {0}Idea/feature{1}".format(green,r))
+        print(cyan+bold+link+r)
         time.sleep(2)
         webbrowser.open(link,new=2)
 
@@ -200,7 +201,7 @@ def quit():
                     valid=True
 
             SaveToFile(userSelect)
-            recommendIdea()
+            requestFeedback()
             
     else:
         print(green,"[+] Exiting program",r)
