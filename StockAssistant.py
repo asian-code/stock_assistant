@@ -48,6 +48,7 @@ querystring = {"symbol":"","function":"GLOBAL_QUOTE"}
 headers = {'x-rapidapi-host': "alpha-vantage.p.rapidapi.com",'x-rapidapi-key':"fa3f62a263mshdb10554a622214ep10f92ejsn34fca50a787f"}
 
 #to do list
+# sorting method
 # export to html file (table)
 # windows support (code freeze)
 def logo():
@@ -65,19 +66,35 @@ def logo():
  https://github.com/asian-code/stock_assistant/ {0}
             Made by Asian-code                               
 '''.format(green,cyan,yellow)+r)
+
 def SaveToFile():
-    f=open(filename,"w")
-    f.write("Name\t\tBuy/Sell\t\t\tProfit\t\t% gain")
+    #add all [gain %] to a sorted list
+    ratios=[]
     for i in Entry:
-        f.write(i)
+        ratios.append(i[3])
+    ratios=sorted(ratios,reverse=True)
+    #build results based on order of ratios
+    results=[]
+    for i in ratios:# i = ratio
+        for x in Entry: # x= element
+                if i == x[3]:
+                    Entry.remove(x)
+                    results.append(x)
+
+    # save to text file
+    f=open(filename,"w")
+    f.write("\nName\t\tBuy/Sell\t\t\tProfit\t\tGain %\n")
+    for i in results:
+        f.write("{0}\t\t{1}\t\t${2}\t\t{3}%".format(i[0],i[1],i[2],i[3]))
     f.close()
 
 def Display():
     if len(Entry)>0:
         print("---{0}Saved Stocks{1}--------------------------------------------".format(green,r))   
-        print(cyan,"Name\t\tBuy/Sell\t\t\tProfit\t\t% gain",r)
+        print(cyan,"Name\t\tBuy/Sell\t\t\tProfit\t\tGain %",r)
+        # loop through each tuple
         for i in Entry:
-            print(i)
+            print("{0}\t\t{1}\t\t${2}\t\t{3}%".format(i[0],i[1],i[2],i[3]))
         print("-----------------------------------------------------------")
 
 def GetStockPriceOFFLINE():
@@ -95,7 +112,7 @@ def GetStockPriceOFFLINE():
 def quit():
     global filename
     if len(Entry)>0:
-        save=input("\n\n[*] Would you like to save file? (y/n): ")
+        save=input("\n\n{0}[*] Would you like to save file?{1} (y/n): ".format(green,r))
         if save=="y":
             nameInput=input("[*]Enter file name (default name = {0}): ".format(filename))
             #use default name if input is empty
@@ -163,8 +180,11 @@ try:
                 valid=False
         
         profit=round(oprice-cprice,2)
-        #save to array -profit/cprice
-        Entry.append("{0}\t\t${3}/${4}\t\t${1}\t\t{2}".format(name,profit,round(profit/cprice*100,2),cprice,oprice))
+        ratio=round(profit/cprice*100,2)
+        #save to list order of (Name,buy/sell,profit,ratio)
+        Entry.append([name,"${0}/${1}".format(cprice,oprice),profit,ratio])
+        #"{0}\t\t${3}/${4}\t\t${1}\t\t{2}".format(name,profit,ratio,cprice,oprice)
+        #print(Entry)
         print(r)
         os.system("clear")
 except KeyboardInterrupt:
