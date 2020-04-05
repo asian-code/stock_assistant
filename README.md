@@ -1,5 +1,5 @@
 
-<a href="https://raw.githubusercontent.com/asian-code/stock_assistant/master/Images/SAdemo.png" target="_blank"><img src="https://raw.githubusercontent.com/asian-code/stock_assistant/master/Images/SAdemo.png" align="right" border="0" width="450" height="200"></a>
+<a href="https://raw.githubusercontent.com/asian-code/stock_assistant/master/Images/SAdemo.png" target="_blank"><img src="https://raw.githubusercontent.com/asian-code/stock_assistant/master/Images/SAdemo.png" align="top" border="0" width="450" height="350"></a>
 
 ## :chart_with_upwards_trend: &nbsp; About Stock Assistant &nbsp; :chart_with_upwards_trend:
 
