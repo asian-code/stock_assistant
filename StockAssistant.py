@@ -1,7 +1,9 @@
 import os
+import sys
 import requests
 import json
-
+import webbrowser
+import time
 cprice=0
 oprice=0
 name=""
@@ -82,59 +84,73 @@ def SaveToFile(option):
                     results.append(x)
 
     # Filename                
-    nameInput=input("{2}[*]Enter file name (default = {1}{0}{2}):{1} ".format(filename,green,r))
+    nameInput=input("{2}[*] Enter file name (default = {1}{0}{2}):{1} ".format(filename,green,r))
     # if input is empty
     if nameInput != "":
         filename=nameInput
-    
-    # save to html table
-    if option=="1":
-        f=open(filename+".html","w")
-        f.write('''<style type="text/css">
-  .tg  {border-collapse:collapse;border-spacing:100;border-color:#9ABAD9;margin:0px auto;}
-  .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#9ABAD9;color:#444;background-color:#EBF5FF;}
-  .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#9ABAD9;color:#fff;background-color:#409cff;}
-  .tg .TopRow{font-size:22px;font-family:"Arial Black", Gadget, sans-serif !important;;border-color:inherit;text-align:center;vertical-align:top;position:sticky;position:-webkit-sticky;top:-1px;will-change:transform}
-  .tg .row1{background-color:#D2E4FC;font-size:22px;font-family:Arial, Helvetica, sans-serif !important;;border-color:inherit;text-align:center;vertical-align:top}
-  .tg .row2{font-size:22px;font-family:Arial, Helvetica, sans-serif !important;;border-color:inherit;text-align:center;vertical-align:top}
-  </style>
-  <table class="tg">
-    <tr>
-      <th class="TopRow">Stock</th>
-      <th class="TopRow">Buy/Sell</th>
-      <th class="TopRow">Profit Per Share</th>
-      <th class="TopRow">% Gain</th>
-    </tr>
-''')
-        c=0 # counter between css :row1, row2
-        for i in results:
-            f.write("<tr>")
-            for x in i:
-                if c % 2==0:
-                    f.write('<td class="row2">'+str(x)+'</td>')
-                else:
-                    f.write('<td class="row1">'+str(x)+'</td>')
-            f.write("<tr>")
-            c+=1
-        f.write("</table>")
-        f.close()
+    try:
+        # save to html table
+        if option=="1":
+            filename+=".html"
+            f=open(filename,"w")
+            f.write('''<style type="text/css">
+    .tg  {border-collapse:collapse;border-spacing:100;border-color:#9ABAD9;margin:0px auto;}
+    .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#9ABAD9;color:#444;background-color:#EBF5FF;}
+    .tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#9ABAD9;color:#fff;background-color:#409cff;}
+    .tg .TopRow{font-size:22px;font-family:"Arial Black", Gadget, sans-serif !important;;border-color:inherit;text-align:center;vertical-align:top;position:sticky;position:-webkit-sticky;top:-1px;will-change:transform}
+    .tg .row1{background-color:#D2E4FC;font-size:22px;font-family:Arial, Helvetica, sans-serif !important;;border-color:inherit;text-align:center;vertical-align:top}
+    .tg .row2{font-size:22px;font-family:Arial, Helvetica, sans-serif !important;;border-color:inherit;text-align:center;vertical-align:top}
+    </style>
+    <table class="tg">
+        <tr>
+        <th class="TopRow">Stock</th>
+        <th class="TopRow">Buy/Sell</th>
+        <th class="TopRow">Profit Per Share</th>
+        <th class="TopRow">% Gain</th>
+        </tr>
+    ''')
+            c=0 # counter between css :row1, row2
+            for i in results:
+                f.write("<tr>")
+                for x in i:
+                    if c % 2==0:
+                        f.write('<td class="row2">'+str(x)+'</td>')
+                    else:
+                        f.write('<td class="row1">'+str(x)+'</td>')
+                f.write("<tr>")
+                c+=1
+            f.write("</table>")
+            f.close()
 
-    # save to text file
-    if option =="0":
-        f=open(filename+".txt","w")
-        f.write("\nName\t\tBuy/Sell\t\tProfit\t\tGain %\n")
-        for i in results:
-            f.write("\n{0}\t\t{1}\t\t${2}\t\t{3}%".format(i[0],i[1],i[2],i[3]))
-        f.close()
-    # tell user the results have been saved
-    location=""
-    print(green+"[+] Results have been saved!"+r)
-    print(green+"[+] File located at "+cyan+location+r)
+        # save to text file
+        if option =="0":
+            filename+=".txt"
+            f=open(filename,"w")
+            f.write("\nName\t\tBuy/Sell\t\t\tProfit\t\tGain %\n")
+            for i in results:
+                f.write("\n{0}\t\t{1}\t\t${2}\t\t{3}%".format(i[0],i[1],i[2],i[3]))
+            f.close()
+        # tell user the results have been saved
+        location=resource_path(filename)
+        print(green+"[+] Results have been saved!"+r)
+        print(green+"[+] File located at "+cyan+location+r)
+        # Auto open the saved table for user to see
+        #if option=="1":
+        #    webbrowser.open(location, new=2)
+    except:
+        print(red,"[!] A problem occured while trying to save to file, please try again"+r)
+        report=input("[*] Would you like to report this issue? (y/n): ")
+        if report.lower()=="y":
+            link="https://github.com/asian-code/stock_assistant/issues"
+            print(cyan+bold+"[!] Please screenshot the error message and post it on "+green+link+r)
+            print("---Error Message--------------------------------")
+            raise
+            webbrowser.open(link,new=2)
 
 def Display():
     if len(Entry)>0:
         print("---{0}Saved Stocks{1}--------------------------------------------".format(green,r))   
-        print(cyan,"Name\t\tBuy / Sell\t\tProfit\t\tGain %",r)
+        print(cyan,"Name\t\tBuy / Sell\t\t\tProfit\t\tGain %",r)
         # loop through each tuple
         for i in Entry:
             print("{0}\t\t{1}\t\t${2}\t\t{3}%".format(i[0],i[1],i[2],i[3]))
@@ -151,6 +167,12 @@ def GetStockPriceOFFLINE():
         except:
             print(red,"[!] Not a valid price",r)
             valid=False
+def recommendIdea():
+    idea=input(r+"Think the tool can be better? Would you like to send ideas/features that should be added to Stock Assistant? (y/n): ")
+    if idea.lower()=="y":
+        print("Please post the Idea as an issue labeled as Idea/feature")
+        time.sleep(2)
+        webbrowser.open("https://github.com/asian-code/stock_assistant/issues/new",new=2)
 
 def quit():
     userSelect="0"# default text
@@ -173,6 +195,8 @@ def quit():
                     valid=True
 
             SaveToFile(userSelect)
+            recommendIdea()
+            
     else:
         print(green,"[+] Exiting program",r)
 
@@ -189,6 +213,16 @@ def getStockPrice(ticker):
             return False
     else:
         return False
+
+def resource_path(relative_path):
+    # Get absolute path to resource, works for dev and for PyInstaller
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 try:
     while True:
