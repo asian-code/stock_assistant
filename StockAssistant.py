@@ -134,9 +134,9 @@ def SaveToFile(option):
         if option =="0":
             filename+=".txt"
             f=open(filename,"w")
-            f.write("\nName\t\tBuy/Sell\t\tProfit\t\tGain %\n")
+            f.write("\n{0}Name\t\t{2:<12}\t\t{3}\t\tGain %{1}\n".format(cyan,r,"Buy / Sell","Profit"))
             for i in results:
-                f.write("\n{0}\t\t{1}\t\t${2}\t\t{3}%".format(i[0],i[1],i[2],i[3]))
+                f.write("\n{0:<4}\t\t{1:<12}\t\t${2:<6}\t\t{3}%".format(i[0],i[1],i[2],i[3]))
             f.close()
         # tell user the results have been saved
         location=resource_path(filename)
