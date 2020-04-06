@@ -26,7 +26,8 @@ Python Library (Pip3):
 * pip3
 * requests
 
-Internet connection (optional)
+Internet connection to automatically get current stock price (optional)
+
 ------------------------------------------------------------------------
 
 ##  &nbsp; How to Install &nbsp; :inbox_tray:
