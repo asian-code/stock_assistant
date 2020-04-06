@@ -3,7 +3,13 @@
 
 ## :chart_with_upwards_trend: &nbsp; About Stock Assistant &nbsp; :chart_with_upwards_trend:
 
-This is a small terminal tool which allows the user to compare possible gain between stocks.
+This is a small terminal tool which allows the user to compare possible gain between stocks.<br><br>
+**Features:**
+* Automatically get stock price (optional)
+* Export results to a text file (.txt) or html table (.html)
+
+<br>
+
 #### NOTE: This tool can fetch the current price of a stock through an API that is limited to 500 per day. <br>(will implement a better way to get current stock data in future update)
 
 ------------------------------------------------------------------------
