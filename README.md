@@ -46,7 +46,7 @@ Type in your terminal - `sudo apt install python3` <br>
 ## :running: &nbsp; How to Run &nbsp; :running:
 
 ***For Linux and Mac OS X:***
-1. Locate the location of stock_assistant.py file in terminal<br>
+1. Locate stock_assistant.py file in terminal<br>
 2. Type `stock_assistant.py` in terminal
 
 ------------------------------------------------------------------------
