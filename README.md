@@ -1,4 +1,4 @@
-
+<a href="https://raw.githubusercontent.com/asian-code/stock_assistant/master/Images/logo.png" target="_blank"><img src="https://raw.githubusercontent.com/asian-code/stock_assistant/master/Images/logo.png" align="top" border="0" width="400" height="200"></a>
 ##  &nbsp; About Stock Assistant &nbsp; :chart_with_upwards_trend:
 
 This is a small terminal tool which allows the user to compare possible gain between stocks.<br><br>
