@@ -6,7 +6,6 @@ import webbrowser
 import time
 import platform
 
-osystem=platform.system()
 cprice=0
 oprice=0
 name=""
@@ -70,8 +69,13 @@ def logo():
  https://github.com/asian-code/stock_assistant/ {0}
             Made by Asian-code                               
 '''.format(green,cyan,yellow)+r)
+
 def clearScreen():
-    
+    if platform.system()=="Windows":
+        os.system("cls")
+    else:
+        os.system("clear")
+        
 def SaveToFile(option):
     global filename
     #add all [gain %] to a sorted list
@@ -154,10 +158,11 @@ def SaveToFile(option):
 def Display():
     if len(Entry)>0:
         print("---{0}Saved Stocks{1}--------------------------------------------".format(green,r))   
-        print(cyan,"Name\t\tBuy / Sell\t\tProfit\t\tGain %",r)
+        print("{0}Name\t\t{2:<12}\t\t{3}\t\tGain %{1}".format(cyan,r,"Buy / Sell","Profit"))
         # loop through each tuple
+        # string formatting with field width specifiers for chart
         for i in Entry:
-            print("{0}\t\t{1}\t\t{2}\t\t{3}%".format(i[0],i[1],i[2],i[3]))
+            print("{0:<4}\t\t{1:<12}\t\t{2:<6}\t\t{3}%".format(i[0],i[1],i[2],i[3]))
         print("-----------------------------------------------------------")
 
 def GetStockPriceOFFLINE():
@@ -191,7 +196,7 @@ def quit():
             #check valid selected option 
             valid=False
             while not valid:
-                os.system("clear")
+                clearScreen()
                 Display()
                 print("\n---{0}Options{1}---------------------------".format(cyan,r))
                 print("\n{1} [{0}0{1}] Save as a text file (.txt)\n [{0}1{1}] Save as a html table (.html)\n".format(green,r))
@@ -275,8 +280,8 @@ try:
         #"{0}\t\t${3}/${4}\t\t${1}\t\t{2}".format(name,profit,ratio,cprice,oprice)
         #print(Entry)
         print(r)
-        os.system("clear")
+        clearScreen()
 except KeyboardInterrupt:
     print(r)
-    os.system("clear")
+    clearScreen()
     quit()
