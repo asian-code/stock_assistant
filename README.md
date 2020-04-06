@@ -1,3 +1,4 @@
+
 ##  &nbsp; About Stock Assistant &nbsp; :chart_with_upwards_trend:
 
 This is a small terminal tool which allows the user to compare possible gain between stocks.<br><br>
