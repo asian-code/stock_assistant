@@ -4,7 +4,7 @@
 ## :chart_with_upwards_trend: &nbsp; About Stock Assistant &nbsp; :chart_with_upwards_trend:
 
 This is a small terminal tool which allows the user to compare possible gain between stocks.
-This tool can fetch the current price of a stock through an API that is limited to 500 per day.
+#### NOTE: This tool can fetch the current price of a stock through an API that is limited to 500 per day. <br>(will implement a better way to get current stock data in future update)
 
 ------------------------------------------------------------------------
 
@@ -30,10 +30,15 @@ You can install the program by:
 
 Or by...
 
-**2. Typing in your terminal - `git clone https://www.github.com/asian-code/stock_assistant`**
+**2. Type in your terminal - `git clone https://www.github.com/asian-code/stock_assistant`**
 
 
-##### Setup Information
+### Setup Information
+**To make sure python3 is installed on the system:**<br>
+Type in your terminal - `sudo apt install python3` <br>
+
+
+
 ------------------------------------------------------------------------
 
 ## :running: &nbsp; How to Run &nbsp; :running:
