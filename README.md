@@ -32,22 +32,16 @@ Or by...
 
 **2. Type in your terminal - `git clone https://www.github.com/asian-code/stock_assistant`**
 
-
-### Setup Information
 **To make sure python3 is installed on the system:**<br>
 Type in your terminal - `sudo apt install python3` <br>
-
-
 
 ------------------------------------------------------------------------
 
 ## :running: &nbsp; How to Run &nbsp; :running:
 
 ***For Linux and Mac OS X:***
-
-**1. Locate the location of stock_assistant.py file in terminal**<br>
-**2. Enter `stock_assistant.py`**
-
+1. Locate the location of stock_assistant.py file in terminal<br>
+2. Type `stock_assistant.py` in terminal
 
 ------------------------------------------------------------------------
 
