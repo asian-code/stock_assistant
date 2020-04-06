@@ -11,8 +11,12 @@ This is a small terminal tool which allows the user to compare possible gain bet
 #### NOTE: This tool can fetch the current price of a stock through an API that is limited to 500 per day. <br>(will implement a better way to get current stock data in future update)
 ## Screenshots
 <a href="" target="_blank"><img src="https://raw.githubusercontent.com/asian-code/stock_assistant/master/Images/autoPrice.png" align="top" border="0" width="350" height="300"></a>
+<a href="" target="_blank"><img src="https://raw.githubusercontent.com/asian-code/stock_assistant/master/Images/table.png" align="top" border="0" width="350" height="300"></a>
 <a href="" target="_blank"><img src="https://raw.githubusercontent.com/asian-code/stock_assistant/master/Images/savemenu.png" align="top" border="0" width="350" height="300"></a>
 <a href="" target="_blank"><img src="https://raw.githubusercontent.com/asian-code/stock_assistant/master/Images/htmlTable.png" align="top" border="0" width="350" height="300"></a>
+
+
+
 ------------------------------------------------------------------------
 
 ##  &nbsp; Requirements &nbsp; :unlock:
