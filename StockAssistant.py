@@ -5,6 +5,8 @@ import json
 import webbrowser
 import time
 import platform
+from datetime import date
+from datetime import datetime
 
 cprice=0
 oprice=0
@@ -78,6 +80,11 @@ def clearScreen():
         
 def SaveToFile(option):
     global filename
+    # cache today data and time
+    now = datetime.now()
+    today = date.today()
+    current_date = today.strftime("%d/%m/%Y")
+    current_time = now.strftime("%H:%M")
     #add all [gain %] to a sorted list
     ratios=[]
     for i in Entry:
@@ -101,6 +108,7 @@ def SaveToFile(option):
         if option=="1":
             filename+=".html"
             f=open(filename,"w")
+            f.write("Created on {0} at {1}".format(current_date,current_time))
             f.write('''<style type="text/css">
     .tg  {border-collapse:collapse;border-spacing:100;border-color:#9ABAD9;margin:0px auto;}
     .tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#9ABAD9;color:#444;background-color:#EBF5FF;}
@@ -109,6 +117,7 @@ def SaveToFile(option):
     .tg .row1{background-color:#D2E4FC;font-size:22px;font-family:Arial, Helvetica, sans-serif !important;;border-color:inherit;text-align:center;vertical-align:top}
     .tg .row2{font-size:22px;font-family:Arial, Helvetica, sans-serif !important;;border-color:inherit;text-align:center;vertical-align:top}
     </style>
+    <div align="center"><h3>Best value stocks are on the top of chart</h3></div>
     <table class="tg">
         <tr>
         <th class="TopRow">Stock</th>
@@ -134,7 +143,8 @@ def SaveToFile(option):
         if option =="0":
             filename+=".txt"
             f=open(filename,"w")
-            f.write("\n{0}Name\t\t{2:<12}\t\t{3}\t\tGain %{1}\n".format(cyan,r,"Buy / Sell","Profit"))
+            f.write("Created on {} at {}\n".format(current_date,current_time))
+            f.write("\nStock\t\t{0:<12}\t\t{1:<6}\t\tGain %\n".format("Buy / Sell","Profit"))
             for i in results:
                 f.write("\n{0:<4}\t\t{1:<12}\t\t${2:<6}\t\t{3}%".format(i[0],i[1],i[2],i[3]))
             f.close()
