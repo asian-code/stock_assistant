@@ -56,6 +56,7 @@ querystring = {"symbol":"","function":"GLOBAL_QUOTE"}
 headers = {'x-rapidapi-host': "alpha-vantage.p.rapidapi.com",'x-rapidapi-key':"fa3f62a263mshdb10554a622214ep10f92ejsn34fca50a787f"}
 # https://prod.liveshare.vsengsaas.visualstudio.com/join?98F535C2A3ACBAF842829EAAE85EA886252F
 #to do list
+#testing 
 # windows support (code freeze)
 #pyinstaller -F -i StockAssistant.ico StocksAssistant.py
 def logo():
@@ -272,10 +273,16 @@ def processHTMLImport(location):
     file=open(location,"r")
     data=file.read()
     file.close()
-    print(data)
-    print("--------------------------------------")
-    data=data.split("<!--Stock Data")# comment ends in -->
-    print(data)
+    if "<!--Stock Data " not in data:
+        print(red+"[!] Didnt detect any stock data"+r)
+        return KeyboardInterrupt
+    data=data.split("<!--Stock Data ")
+    data=data[1].split("-->")[0]# json data
+    data=json.loads(data)# turns into a dictionary
+    # get sell price isolated 
+    for i in data.keys():
+        data[i]=data[i].split("/$")[1]
+    return data
     
 
 
@@ -285,14 +292,19 @@ try:
         Display()
         print()
         # quit
-        print(" Press '{0}Contorl+c{1}' or '{0}Crtl+c{1}' to quit/save\n".format(cyan,r))
-        print(" Enter 'import' to update a html table")
+        print(" Press '{0}Contorl+c{1}' or '{0}Crtl+c{1}' to quit/save".format(cyan,r))
+        print(" Enter '{0}import{1}' to update a html table\n".format(cyan,r))
         name=input(r+"[*] Ticker symbol of stock: "+green).upper()
+        print(r)# resets color
         if name.upper()=="0":
             raise KeyboardInterrupt
-        # elif name.lower()=="import":
-        #     fileLocation=getImportLocation()
-        #     print("LOCATION: " + fileLocation)
+        elif name.lower()=="import":
+            fileLocation=getImportLocation()
+            #print(r+"LOCATION: " + fileLocation)
+            stocks=processHTMLImport(fileLocation)# returns dic of stocks in (name:)
+            print(stocks)
+
+            break
 
 
 
