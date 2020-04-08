@@ -7,6 +7,8 @@ import time
 import platform
 from datetime import date
 from datetime import datetime
+from tkinter import filedialog
+from tkinter import *
 
 cprice=0
 oprice=0
@@ -137,6 +139,17 @@ def SaveToFile(option):
                 f.write("<tr>")
                 c+=1
             f.write("</table>")
+
+            # save data in html comment for future import
+
+            # save data as json
+            data={}
+            for i in results:
+                data[results[0]]=results[1]
+            # write json into file
+            f.write("<!--Stock Data ")
+            f.write(json.dumps(data))
+            f.write("-->")
             f.close()
 
         # save to text file
@@ -245,6 +258,27 @@ def resource_path(relative_path):
 
     return os.path.join(base_path, relative_path)
 
+def getImportLocation():
+    root = Tk().withdraw(
+        )  # withdraw prevents the tiny window from popping up
+    location = filedialog.askopenfilename(initialdir="/",title="Select file",filetypes=(("html files","*.html"),("all files", "*.*")))
+    if location == "":
+        print(red + "[!] No file was selected" + r)
+        return False
+    return location
+    
+def processHTMLImport(location):
+    # get json data from html table
+    file=open(location,"r")
+    data=file.read()
+    file.close()
+    print(data)
+    print("--------------------------------------")
+    data=data.split("<!--Stock Data")# comment ends in -->
+    print(data)
+    
+
+
 try:
     while True:
         logo()
@@ -252,9 +286,15 @@ try:
         print()
         # quit
         print(" Press '{0}Contorl+c{1}' or '{0}Crtl+c{1}' to quit/save\n".format(cyan,r))
+        print(" Enter 'import' to update a html table")
         name=input(r+"[*] Ticker symbol of stock: "+green).upper()
         if name.upper()=="0":
             raise KeyboardInterrupt
+        # elif name.lower()=="import":
+        #     fileLocation=getImportLocation()
+        #     print("LOCATION: " + fileLocation)
+
+
 
         # Get Current Price
         autoInfo=input("{0}[*] Get the current price of {1}{2}{0} automatically? (y/n): ".format(r,green,name))
@@ -285,7 +325,7 @@ try:
         
         profit=round(oprice-cprice,2)
         ratio=round(profit/cprice*100,2)
-        #save to list order of (Name,buy/sell,profit,ratio)
+        #save to list ,order of data =(Name,buy/sell,profit,ratio)
         Entry.append([name,"${0}/${1}".format(cprice,oprice),"$"+str(profit),ratio])
         #"{0}\t\t${3}/${4}\t\t${1}\t\t{2}".format(name,profit,ratio,cprice,oprice)
         #print(Entry)
