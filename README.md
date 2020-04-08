@@ -31,6 +31,7 @@ Python Library (Pip3):
 * python3
 * pip3
 * requests
+* tkinter
 
 Internet connection to automatically get current stock price (optional)
 
