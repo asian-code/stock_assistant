@@ -54,7 +54,7 @@ bwhite = '\33[107'
 url = "https://alpha-vantage.p.rapidapi.com/query"
 querystring = {"symbol":"","function":"GLOBAL_QUOTE"}
 headers = {'x-rapidapi-host': "alpha-vantage.p.rapidapi.com",'x-rapidapi-key':"fa3f62a263mshdb10554a622214ep10f92ejsn34fca50a787f"}
-
+# https://prod.liveshare.vsengsaas.visualstudio.com/join?98F535C2A3ACBAF842829EAAE85EA886252F
 #to do list
 # windows support (code freeze)
 #pyinstaller -F -i StockAssistant.ico StocksAssistant.py
@@ -145,7 +145,7 @@ def SaveToFile(option):
             # save data as json
             data={}
             for i in results:
-                data[results[0]]=results[1]
+                data[i[0]]=i[1]
             # write json into file
             f.write("<!--Stock Data ")
             f.write(json.dumps(data))
