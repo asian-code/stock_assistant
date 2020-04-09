@@ -10,10 +10,7 @@ from datetime import datetime
 from tkinter import filedialog
 from tkinter import *
 
-cprice=0
-oprice=0
-name=""
-Entry=[]
+
 filename="myStocks"
 r = '\033[0m'  # reset
 bold = '\033[01m'
@@ -54,11 +51,8 @@ bwhite = '\33[107'
 url = "https://alpha-vantage.p.rapidapi.com/query"
 querystring = {"symbol":"","function":"GLOBAL_QUOTE"}
 headers = {'x-rapidapi-host': "alpha-vantage.p.rapidapi.com",'x-rapidapi-key':"fa3f62a263mshdb10554a622214ep10f92ejsn34fca50a787f"}
-# https://prod.liveshare.vsengsaas.visualstudio.com/join?98F535C2A3ACBAF842829EAAE85EA886252F
-#to do list
-#testing 
-# windows support (code freeze)
-#pyinstaller -F -i StockAssistant.ico StocksAssistant.py
+#to do list 
+# windows support (code freeze) pyinstaller -F -i StockAssistant.ico StocksAssistant.py
 def logo():
     print('''{2}
         ____  _             _            
@@ -190,16 +184,17 @@ def Display():
         print("-----------------------------------------------------------")
 
 def GetStockPriceOFFLINE():
-    global cprice
+    price=0
     valid=False
     while not valid:
         try:
             print(cyan+"---Getting stock buy price manually-----------------------")
-            cprice=float(input(r+"[*] Current Price of stock: "+green))
+            price=float(input(r+"[*] Current Price of stock: "+green))
             valid=True
         except:
             print(red,"[!] Not a valid price",r)
             valid=False
+    return price
 
 def requestFeedback():
     link="https://github.com/asian-code/stock_assistant/issues/new"
@@ -281,13 +276,21 @@ def processHTMLImport(location):
     data=json.loads(data)# turns into a dictionary
     # get sell price isolated 
     for i in data.keys():
-        data[i]=data[i].split("/$")[1]
+        data[i]=float(data[i].split("/$")[1])
     return data
     
-
+def CreateEntry(name,buy,sell):
+    profit=round(sell-buy,2)
+    ratio=round(profit/buy*100,2)
+    #save to list ,order of data =(Name,buy/sell,profit,ratio)
+    return [name,"${0}/${1}".format(buy,sell),"$"+str(profit),ratio]
 
 try:
+    Entry=[]
     while True:
+        cprice=0
+        oprice=0
+        name=""
         logo()
         Display()
         print()
@@ -295,18 +298,35 @@ try:
         print(" Press '{0}Contorl+c{1}' or '{0}Crtl+c{1}' to quit/save".format(cyan,r))
         print(" Enter '{0}import{1}' to update a html table\n".format(cyan,r))
         name=input(r+"[*] Ticker symbol of stock: "+green).upper()
+        name=name.replace(" ","")# get rid of whitespace
         print(r)# resets color
         if name.upper()=="0":
             raise KeyboardInterrupt
         elif name.lower()=="import":
             fileLocation=getImportLocation()
-            #print(r+"LOCATION: " + fileLocation)
             stocks=processHTMLImport(fileLocation)# returns dic of stocks in (name:)
-            print(stocks)
-
+            #display detected stocks from html table
+            clearScreen()
+            print(r+"---{0}Detected Imported Stocks{1}------------------------".format(green,r))
+            print(cyan+"Name\t\tSell"+r)
+            for i in stocks.keys():
+                print("{0:<5}\t\t${1}".format(i,stocks[i]))
+            print("----------------------------------------------")
+            # get info for each stock
+            for i in stocks.keys():
+                # set name
+                name=i
+                # get buy price
+                cprice=getStockPrice(i)
+                if cprice is False:
+                    print("{0}[!] Unable to determine stock price for {1}{2}{3}".format(red,green,i,r))
+                    cprice= GetStockPriceOFFLINE()
+                # set sell price
+                oprice=stocks[i]
+                
+                Entry.append(CreateEntry(name,cprice,oprice))
+            quit()
             break
-
-
 
         # Get Current Price
         autoInfo=input("{0}[*] Get the current price of {1}{2}{0} automatically? (y/n): ".format(r,green,name))
@@ -315,15 +335,15 @@ try:
             cprice=getStockPrice(name)
             # if cant get stock data
             if cprice==False:
-                print("[!] Could not get data for this stock")
-                GetStockPriceOFFLINE()
+                print(red+"[!] Could not get data for this stock,perhaps misspelled?"+r)
+                cprice=GetStockPriceOFFLINE()
             else:
                 print(cyan+"---Getting current Stock buy price automatically-----------------------")
                 print(green+"[+] Detected price: ",r,cprice)
 
         else:
             # get current price(offline method)
-            GetStockPriceOFFLINE()
+            cprice=GetStockPriceOFFLINE()
         
         # get sell price
         valid=False
@@ -335,12 +355,7 @@ try:
                 print(red,"[!] Not a valid price",r)
                 valid=False
         
-        profit=round(oprice-cprice,2)
-        ratio=round(profit/cprice*100,2)
-        #save to list ,order of data =(Name,buy/sell,profit,ratio)
-        Entry.append([name,"${0}/${1}".format(cprice,oprice),"$"+str(profit),ratio])
-        #"{0}\t\t${3}/${4}\t\t${1}\t\t{2}".format(name,profit,ratio,cprice,oprice)
-        #print(Entry)
+        Entry.append(CreateEntry(name,cprice,oprice))
         print(r)
         clearScreen()
 except KeyboardInterrupt:
