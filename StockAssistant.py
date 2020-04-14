@@ -200,7 +200,8 @@ def requestFeedback():
     link="https://github.com/asian-code/stock_assistant/issues/new"
     idea=input(r+"\n---{0}Got Feedback/Ideas/Issues? {1}-----------------------------\n Think the tool can be better?\n Would you like to send feedback? (y/n): ".format(cyan,r))
     if idea.lower()=="y":
-        print("\nPlease enter the feedback here: "+cyan+bold+link+r)
+        print(cyan+bold+link+r)
+        time.sleep(2)
         webbrowser.open(link,new=2)
 
 def quit():
@@ -256,7 +257,7 @@ def resource_path(relative_path):
 def getImportLocation():
     root = Tk().withdraw(
         )  # withdraw prevents the tiny window from popping up
-    location = filedialog.askopenfilename(initialdir="/",title="Select file",filetypes=(("html files","*.html"),("other files","*.*")))
+    location = filedialog.askopenfilename(initialdir="/~",title="Select file",filetypes=(("html files","*.html"),("all files", "*.*")))
     if location == "":
         print(red + "[!] No file was selected" + r)
         return False
@@ -267,18 +268,16 @@ def processHTMLImport(location):
     file=open(location,"r")
     data=file.read()
     file.close()
-    if "<!--Stock Data " in data:
-        data=data.split("<!--Stock Data ")
-        data=data[1].split("-->")[0]# json data
-        data=json.loads(data)# turns into a dictionary
-        # save sell price 
-        for i in data.keys():
-            data[i]=float(data[i].split("/$")[1])
-        return data
-    else:
+    if "<!--Stock Data " not in data:
         print(red+"[!] Didnt detect any stock data"+r)
-        return False
-    
+        return KeyboardInterrupt
+    data=data.split("<!--Stock Data ")
+    data=data[1].split("-->")[0]# json data
+    data=json.loads(data)# turns into a dictionary
+    # get sell price isolated 
+    for i in data.keys():
+        data[i]=float(data[i].split("/$")[1])
+    return data
     
 def CreateEntry(name,buy,sell):
     profit=round(sell-buy,2)
@@ -305,9 +304,7 @@ try:
             raise KeyboardInterrupt
         elif name.lower()=="import":
             fileLocation=getImportLocation()
-            stocks=processHTMLImport(fileLocation)# returns dic of stocks in {name:sell}
-            if stocks is False:
-                break
+            stocks=processHTMLImport(fileLocation)# returns dic of stocks in (name:)
             #display detected stocks from html table
             clearScreen()
             print(r+"---{0}Detected Imported Stocks{1}------------------------".format(green,r))
