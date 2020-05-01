@@ -31,7 +31,7 @@ Python Library (Pip3):
 * python3
 * pip3
 * requests
-* tkinter
+* tkinter (should come with python installation)
 
 Internet connection to automatically get current stock price (optional)
 
@@ -49,7 +49,8 @@ Or by...
 
 **To make sure python3 is installed on the system:**<br>
 Type in your terminal - `sudo apt install python3` <br>
-
+and<br>
+make sure requests module is installed by - `pip3 install requests`
 ------------------------------------------------------------------------
 
 ## &nbsp; How to Run &nbsp; :running:
