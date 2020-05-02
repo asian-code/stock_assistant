@@ -48,9 +48,12 @@ Or by...
 **2. Type in your terminal - `git clone https://www.github.com/asian-code/stock_assistant`**
 
 **To make sure python3 is installed on the system:**<br>
+
 Type in your terminal - `sudo apt install python3` <br>
 and<br>
 make sure requests module is installed by - `pip3 install requests`
+
+
 ------------------------------------------------------------------------
 
 ## &nbsp; How to Run &nbsp; :running:
