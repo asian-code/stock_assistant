@@ -1,7 +1,7 @@
 <a href="" target="_blank"><img src="https://raw.githubusercontent.com/asian-code/stock_assistant/master/Images/logo.png" align="top" border="0" width="400" height="200"></a>
 ##  &nbsp; About Stock Assistant &nbsp; :chart_with_upwards_trend:
 
-This is a small terminal tool which allows the user to compare possible gain between stocks.<br><br>
+This is a small basic terminal calculator which allows the user to compare possible gain between stocks.<br><br>
 **Features:**
 * Automatically get stock price (optional)
 * Export results to a text file (.txt) or html table (.html)
