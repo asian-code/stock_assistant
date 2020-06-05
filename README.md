@@ -50,7 +50,6 @@ Or by...
 **To make sure python3 is installed on the system:**<br>
 
 Type in your terminal - `sudo apt install python3` <br>
-and<br>
 make sure requests module is installed by - `pip3 install requests`
 <br>
 make sure tkinter is installed -`sudo apt install python3-tk` 
