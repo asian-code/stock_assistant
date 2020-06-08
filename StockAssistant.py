@@ -80,7 +80,7 @@ def SaveToFile(option):
     # cache today data and time
     now = datetime.now()
     today = date.today()
-    current_date = today.strftime("%d/%m/%Y")
+    current_date = today.strftime("%m/%d/%Y")
     current_time = now.strftime("%H:%M")
     #add all [gain %] to a sorted list
     ratios=[]
